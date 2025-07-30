@@ -1,1 +1,0 @@
-web: gunicorn emoji_quiz.wsgi:application --log-file -
