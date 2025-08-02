@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile - {{ user.username }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f8f9fa; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; }
+        .stat { padding: 15px; margin: 10px 0; background: #f8f9fa; border-radius: 8px; text-align: center; }
+        .btn { padding: 12px 24px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; margin: 10px; }
+        @media (max-width: 768px) { .container { padding: 15px; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>👤 {{ user.username }}'s Profile</h1>
+        
+        <div class="stat">
+            <h3>{{ total_games }}</h3>
+            <p>Total Games Played</p>
+        </div>
+        
+        <div class="stat">
+            <h3>{{ correct_answers }}</h3>
+            <p>Correct Answers</p>
+        </div>
+        
+        <div class="stat">
+            <h3>{{ profile.games_remaining }}</h3>
+            <p>Games Remaining Today</p>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="/" class="btn">🎮 Play Quiz</a>
+            <a href="/leaderboard/" class="btn">🏆 Leaderboard</a>
+            <a href="/logout/" class="btn">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

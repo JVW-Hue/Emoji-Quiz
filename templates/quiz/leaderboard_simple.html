@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaderboard - Emoji Quiz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f8f9fa; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; }
+        .player { padding: 15px; margin: 10px 0; background: #f8f9fa; border-radius: 8px; display: flex; justify-content: space-between; }
+        .btn { padding: 12px 24px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; margin: 10px; }
+        @media (max-width: 768px) { .container { padding: 15px; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏆 Leaderboard</h1>
+        
+        {% if user.is_authenticated %}
+        <p>Your Score: <strong>{{ user_score }}</strong> correct answers</p>
+        {% endif %}
+        
+        <h3>Top Players:</h3>
+        {% for user in top_users %}
+        <div class="player">
+            <span>{{ forloop.counter }}. {{ user.username }}</span>
+            <span><strong>{{ user.correct_count }}</strong> points</span>
+        </div>
+        {% endfor %}
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="/" class="btn">🎮 Play Quiz</a>
+            {% if user.is_authenticated %}
+            <a href="/profile/" class="btn">👤 Profile</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

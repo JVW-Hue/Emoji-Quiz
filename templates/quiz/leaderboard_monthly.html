@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monthly Leaderboard - Emoji Quiz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f8f9fa; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .month-info { background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; }
+        .user-stats { background: #f0f9ff; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; }
+        .player { padding: 15px; margin: 10px 0; background: #f8f9fa; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .player.top3 { background: linear-gradient(135deg, #fff3cd, #ffeaa7); }
+        .player.rank1 { background: linear-gradient(135deg, #ffd700, #ffed4e); font-weight: bold; }
+        .rank { font-weight: bold; color: #2563eb; }
+        .btn { padding: 12px 24px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; margin: 10px; }
+        @media (max-width: 768px) { .container { padding: 15px; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏆 Monthly Leaderboard</h1>
+        </div>
+        
+        <div class="month-info">
+            <h3>{{ current_month }} Competition</h3>
+            <p>🔄 Leaderboard resets every month for fair competition!</p>
+        </div>
+        
+        {% if user.is_authenticated %}
+        <div class="user-stats">
+            <h4>Your Monthly Stats</h4>
+            <p><strong>{{ user_monthly_score }}</strong> points this month</p>
+            {% if user_rank > 0 %}
+            <p>Current Rank: <span class="rank">#{{ user_rank }}</span></p>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <h3>🥇 Top Players This Month:</h3>
+        
+        {% if monthly_leaders %}
+            {% for monthly_score in monthly_leaders %}
+            <div class="player {% if forloop.counter <= 3 %}top3{% endif %} {% if forloop.counter == 1 %}rank1{% endif %}">
+                <div>
+                    <span class="rank">
+                        {% if forloop.counter == 1 %}👑
+                        {% elif forloop.counter == 2 %}🥈
+                        {% elif forloop.counter == 3 %}🥉
+                        {% else %}#{{ forloop.counter }}{% endif %}
+                    </span>
+                    <strong>{{ monthly_score.user.username }}</strong>
+                </div>
+                <div>
+                    <strong>{{ monthly_score.total_score }}</strong> points
+                    <small>({{ monthly_score.games_played }} games)</small>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="player">
+                <span>No players yet this month. Be the first!</span>
+            </div>
+        {% endif %}
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="/" class="btn">🎮 Play Quiz</a>
+            {% if user.is_authenticated %}
+            <a href="/profile/" class="btn">👤 Profile</a>
+            {% endif %}
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px; color: #6c757d; font-size: 14px;">
+            <p>💡 Earn 10 points for each correct answer</p>
+            <p>🗓️ Rankings reset on the 1st of every month</p>
+        </div>
+    </div>
+</body>
+</html>
